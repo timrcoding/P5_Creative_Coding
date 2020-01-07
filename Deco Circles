@@ -1,0 +1,79 @@
+var circles = []
+const SCALE = 40
+const COLS = 10
+const ROWS = 10
+var turn = 1
+var weight = 1.5
+var amount = 1
+
+function setup() {
+  createCanvas(405, 405);
+  colorMode(HSB)
+  for(var i = 0; i < COLS; i++){
+    for(var j = 0; j < ROWS; j++){
+      circles.push(new Circle(i*SCALE+SCALE/2+2,j*SCALE+SCALE/2+2))
+    }
+  }
+}
+
+function draw() {
+  background(220);
+  angleMode(DEGREES)
+  for(var i = 0; i < circles.length; i++){
+    circles[i].drawCircles()
+    circles[i].drawArc()
+  }
+  
+  
+      if(frameCount% 60 == 0){
+        for(var i = 0; i< amount; i ++){
+          circles[floor(random(0,ROWS*COLS))].s = turn *45
+        turn *= -1
+        
+        }
+    
+        if(frameCount % 120 ==0){amount++}
+  }
+  
+}
+
+class Circle{
+  
+  constructor(x,y){
+    
+    var pos_choice = [0,90,180,270]
+    var color_choice = ['#fda01c','#03599c','#ea1a32','#2ac7b9','#fefefc']
+    this.rings = floor(random(3,6))
+    this.x = x
+    this.y = y
+    this.begin = pos_choice[floor(random(0,4))]
+    this.end = this.begin+pos_choice[floor(random(0,4))]
+    this.c = color_choice[floor(random(0,5))]
+    this.a = 0;
+    this.s = 0
+  }
+  
+  drawCircles(){
+    for(var i = 0; i < this.rings; i++){
+      strokeWeight(weight)
+      noFill()
+      ellipse(this.x,this.y,i*8)
+    }
+    
+  }
+  
+  drawArc(){
+    push()
+    translate(this.x,this.y)
+    fill(this.c)
+    rotate(this.a)
+    strokeWeight(weight)
+    arc(0,0,SCALE,SCALE,this.begin,this.end,PIE)
+    pop()
+    this.a += this.s
+    this.s *= 0.9
+    
+  }
+  
+  
+}
