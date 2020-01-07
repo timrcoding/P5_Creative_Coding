@@ -1,0 +1,43 @@
+var balls = []
+var num = 250;
+var sizeLim = 25;
+
+function setup() {
+  createCanvas(600, 600);
+  for(var i = 0; i < num; i++){
+  balls.push(new Ball(-200+ i*height));
+  }
+}
+
+function draw() {
+  //colorMode(HSB)
+  background(255,182,193,5);
+  angleMode(DEGREES)
+  translate(width/2,height/2);
+  
+  for(var i = 0; i < balls.length; i++){
+  balls[i].show();
+  }
+}
+
+function Ball(yPos){
+var angle = random(0,360)
+this.yPos = yPos
+this.c = random(0,360)
+  
+this.show = function(){
+var x = map(sin(angle),-1,1,-this.yPos,this.yPos);
+var y = map(cos(angle),-1,1,-width/2,width/2);
+noStroke();
+fill('black')
+ellipse(x,this.yPos,map(sin(this.yPos),-1,1,-15,15));
+angle+=1
+this.yPos -- 
+if(this.yPos < -width/2){
+this.yPos = height/2;
+}
+}
+  
+	
+
+}
